@@ -58,3 +58,19 @@ Match players across sources by name and/or ID. Handle name variations (e.g., sp
 * 21 Apr 2025 – Collected & cleaned 500-player sample (see `data/processed`).
 * 22 Apr 2025 – Completed EDA and three hypothesis tests (see the python notebooks).
 
+### Exploratory Analysis (18 April checkpoint)
+
+#### Hypothesis tests
+
+| # | Test | **H₀ (null)** | **H₁ (alternative)** | Test stat | p-value | Decision <br>(α = 0.05) |
+|---|------|---------------|----------------------|-----------|---------|-------------------------|
+|1|**One-way ANOVA**<br>Market value by league|All leagues share the same mean market value:<br>μ<sub>Prem</sub> = μ<sub>La Liga</sub> = μ<sub>Serie A</sub> = …|At least one league’s mean market value is different.|F = **4.76**|**< 0.001**|Reject H₀|
+|2|**Spearman correlation**<br>Age vs market value|ρ = 0  (no monotonic relationship)|ρ ≠ 0  (monotonic relationship exists)|ρ = **-0.13**|**0.009**|Reject H₀|
+|3|**Pearson correlation**<br>Goals + Assists / 90 vs value|r = 0  (no linear relationship)|r ≠ 0  (linear relationship exists)|r = **0.36**|**< 0.001**|Reject H₀|
+
+### Takeaways
+* **Premier League** players command the highest median value (~3× Serie A).  
+* **Age** shows a modest negative association with value (ρ ≈ -0.13).  
+* **Scoring contribution** per 90 is strongly, positively linked to value (r ≈ 0.36).
+
+> _Limitations_: Dataset covers only 2019-20; match-rating, injury-days, and marital-status columns are placeholders for future scraping.
