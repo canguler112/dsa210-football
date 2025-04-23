@@ -53,6 +53,8 @@ Match players across sources by name and/or ID. Handle name variations (e.g., sp
 - Conduct feature importance analysis to see which variables drive value the most.
 
 
-
-
+## 2. Project structure
+### Progress
+* 21 Apr 2025 – Collected & cleaned 500-player sample (see `data/processed`).
+* 22 Apr 2025 – Completed EDA and three hypothesis tests (see the python notebooks).
 
