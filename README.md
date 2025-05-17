@@ -146,7 +146,7 @@ intercept = lr.intercept_
 print("Intercept β0 =", intercept)
 print("Means:", means)
 print("Scales:", scales)
-print("Coefficients β:", coeffs)
+print("Coefficients β:", coeffs)'''
 
 
 #### Implementation Details & Differences
