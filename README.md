@@ -78,38 +78,6 @@ Match players across sources by name and/or ID. Handle name variations (e.g., sp
 |2  | Random Forest Regressor                    | 0.031     | 7 788 588       |
 |3  | HistGradientBoostingRegressor (polynomials)| 0.156     | 8 625 915       |
 
-#### 5. Prediction Equations & Inputs
-
-| # | Method                             | Predicts              | Input features                                                                                               | Prediction formula |
-|---|------------------------------------|-----------------------|--------------------------------------------------------------------------------------------------------------|--------------------|
-|1  | **Multiple Linear Regression**     | market\_value\_eur    |  
-- \(z_{\text{age}} = \tfrac{\text{age}-\mu_{\text{age}}}{\sigma_{\text{age}}}\)  
-- \(z_{\text{score}} = \tfrac{\text{score\_contrib\_per90}-\mu_{\text{score}}}{\sigma_{\text{score}}}\)  
-- \(z_{\text{cards}} = \tfrac{\text{cards\_2019\_20}-\mu_{\text{cards}}}{\sigma_{\text{cards}}}\)  | 
-\[
-\hat y_{\log}
-= \beta_0
-+ \beta_1\,z_{\text{age}}
-+ \beta_2\,z_{\text{score}}
-+ \beta_3\,z_{\text{cards}},
-\quad
-\hat{\text{market\_value}}
-= e^{\hat y_{\log}} - 1
-\] |
-|2  | **Random Forest Regressor**        | market\_value\_eur    | age, score\_contrib\_per90, cards\_2019\_20, one-hot league, one-hot nationality                                 | 
-\[
-\hat y
-= \frac{1}{T}\sum_{t=1}^{T}\text{Tree}_t(x)
-\quad (T=200,\ \text{max\_depth}=10)
-\] |
-|3  | **HistGradientBoostingRegressor**  | market\_value\_eur    | age, score\_contrib\_per90, cards\_2019\_20, polynomials (age², score², age·score, cards·age), one-hot dummies | 
-\[
-\hat y
-= \sum_{m=1}^{M}\eta\,\text{Tree}_m(x)
-\quad (M=200,\ \eta=0.01)
-\] |
-
-
 #### Implementation Details & Differences
 
 | Script                                      | Key Characteristics                                     | When to Use                                     |
