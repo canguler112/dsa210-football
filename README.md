@@ -11,12 +11,9 @@ Football player market valuations can vary greatly depending on a variety of cr
 2. Age
 3. Nationality
 4. Average Score Contribution (Goals + Assists)
-5. Average Match Rating (1-10)
-6. Player League
-7. Average Card per Season
-8. Total Time Spent Injured
-9. Marriage Status
-
+5. Player League
+6. Average Card per Season
+   
 ### Data Source and Collection
 
 #### Data Sources:
