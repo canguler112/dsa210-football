@@ -75,7 +75,7 @@ Match players across sources by name and/or ID. Handle name variations (e.g., sp
 ### Random Forest Regressor with Average Match Rating  
 **Script:** `src/07_ml_with_rating.py`  
 **Run command:**  
-```bash
+
 python src/07_ml_with_rating.py
 | Metric      | Value        |
 | ----------- | ------------ |
