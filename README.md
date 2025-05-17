@@ -103,7 +103,7 @@ Match players across sources by name and/or ID. Handle name variations (e.g., sp
 | Model                         | Plot                                                             |
 |-------------------------------|------------------------------------------------------------------|
 | Random Forest                 | ![rf_feature_importance](https://github.com/user-attachments/assets/2e31117e-a518-462f-af46-4e8fa793f53b) 
-|                               |     
+| Polynomial Random Forest      | ![rf_feature_importance_poly](https://github.com/user-attachments/assets/6b7c3d55-5f14-4125-bd78-8f58088a8962)    
 | HistGradientBoostingRegressor | ![hgb_perm_importance](https://github.com/user-attachments/assets/d6a9c7d0-2c83-42e3-979a-a3e770b721e3) |
       
 
