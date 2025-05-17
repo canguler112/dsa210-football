@@ -76,7 +76,7 @@ Match players across sources by name and/or ID. Handle name variations (e.g., sp
 **Script:** `src/07_ml_with_rating.py`  
 **Run command:**  
 
-python src/07_ml_with_rating.py
+python notebooks/RandomForestML + Prediction.py
 | Metric      | Value        |
 | ----------- | ------------ |
 | **R²**      | 0.420        |
