@@ -73,4 +73,19 @@ Match players across sources by name and/or ID. Handle name variations (e.g., sp
 * **Age** shows a modest negative association with value (ρ ≈ -0.13).  
 * **Scoring contribution** per 90 is strongly, positively linked to value (r ≈ 0.36).
 
+#### Machine Learning Results
+
+| # | Model                                      | **R²**    | **MAE (€)**     |
+|---|--------------------------------------------|-----------|-----------------|
+|1  | Multiple Linear Regression<br>(log-target) | –4.933    | 18 572 194      |
+|2  | Random Forest Regressor                    | 0.031     | 7 788 588       |
+|3  | HistGradientBoostingRegressor (polynomials)| 0.156     | 8 625 915       |
+
+#### Feature Importances
+
+| Model                         | Plot                                                             |
+|-------------------------------|------------------------------------------------------------------|
+| Random Forest                 | ![RF Importances](images/rf_feature_importance.png)             |
+| HistGradientBoostingRegressor | ![HGB Importances](images/hgb_perm_importance.png)      
+
 > _Limitations_: Dataset covers only 2019-20; match-rating, injury-days, and marital-status columns are placeholders for future scraping.
