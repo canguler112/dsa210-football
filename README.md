@@ -78,6 +78,41 @@ Match players across sources by name and/or ID. Handle name variations (e.g., sp
 |2  | Random Forest Regressor                    | 0.031     | 7 788 588       |
 |3  | HistGradientBoostingRegressor (polynomials)| 0.156     | 8 625 915       |
 
+#### 5. Prediction Formulas & Inputs
+
+| # | Method                               | Predicts                           | Input features                                                                                      | Prediction formula (symbolic)                                                                                               |
+|---|--------------------------------------|------------------------------------|-----------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+|1  | **Multiple Linear Regression**       | log-market-value → market_value    | age, score_contrib_per90, cards_2019_20 (all standardized)                                          | 
+\[
+\widehat{y}_{\log} = \beta_0 
+    + \beta_1\,( \tfrac{\text{age}-\mu_{\text{age}}}{\sigma_{\text{age}}} )
+    + \beta_2\,( \tfrac{\text{score\_contrib\_per90}-\mu_{\text{score}}}{\sigma_{\text{score}}} )
+    + \beta_3\,( \tfrac{\text{cards\_2019\_20}-\mu_{\text{cards}}}{\sigma_{\text{cards}}} )
+\]
+\[
+\widehat{\text{market\_value\_eur}}
+= \exp\bigl(\widehat{y}_{\log}\bigr)\;-\;1
+\] |
+|2  | **Random Forest Regressor**          | market_value_eur                   | age, score_contrib_per90, cards_2019_20, league dummies, nationality dummies                         | 
+\[
+\widehat{\text{market\_value}} 
+= \frac{1}{T}\sum_{t=1}^{T}\text{Tree}_t(\mathbf{x})
+\]
+– ensemble average of 200 depth-10 trees (`T=200`)                                                   |
+|3  | **HistGradientBoostingRegressor**    | market_value_eur                   | age, score_contrib_per90, cards_2019_20, **polynomials** (age², score², age·score, cards·age), league & nationality dummies | 
+\[
+\widehat{\text{market\_value}}
+= \sum_{m=1}^{M} \eta\,\text{Tree}_m(\mathbf{x})
+\]
+– additive trees with `M=200`, learning rate 0.01                                                             |
+
+- In **Linear Regression** we model the **log** of value for a Gaussian fit, then back-transform with exp–1 to report euros.  
+- In **Random Forest** we average many decision trees trained to minimize squared error on the raw euro target.  
+- In **Gradient Boosting** we build an additive sequence of trees that correct the previous residuals, using both original and engineered non-linear features.  
+
+All scripts live under `src/` and save their results & importance plots to `images/`.  
+
+
 #### Implementation Details & Differences
 
 | Script                                      | Key Characteristics                                     | When to Use                                     |
