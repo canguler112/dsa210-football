@@ -81,6 +81,23 @@ Match players across sources by name and/or ID. Handle name variations (e.g., sp
 |2  | Random Forest Regressor                    | 0.031     | 7 788 588       |
 |3  | HistGradientBoostingRegressor (polynomials)| 0.156     | 8 625 915       |
 
+#### Implementation Details & Differences
+
+| Script                                      | Key Characteristics                                     | When to Use                                     |
+|---------------------------------------------|---------------------------------------------------------|-------------------------------------------------|
+| `03_ml_logreg_clipped_fixed.py`             | - Multiple Linear Regression on **log1p**(value)        | Baseline interpretability: understand linear relationships after skew correction.  |
+|                                             | - Random Forest with GridSearch (trees & depth)         | Handles non-linear effects and interactions automatically; good first ensemble.   |
+|                                             | - Clipping & inverse-transform of predictions           | Ensures stable conversion back to original euro scale.                             |
+| `04_ml_boosting_with_perm_importance.py`    | - Polynomial & interaction feature engineering          | Captures explicit non-linear terms (e.g., age², score², age×score).               |
+|                                             | - HistGradientBoostingRegressor with GridSearch         | Powerful boosting algorithm that often outperforms RF on tabular data.             |
+|                                             | - Permutation importance on original 9 features         | Model-agnostic importance metric, identifies true driver strength.                |
+
+**Applications**  
+- **Linear Regression**: Use when you need clear coefficient interpretation and a quick baseline.  
+- **Random Forest**: Use when you want a robust, non-parametric model that handles mixed data types with minimal tuning.  
+- **Gradient Boosting**: Use when you require maximum predictive performance on complex, skewed data, especially after enriching features.
+
+
 #### Feature Importances
 
 | Model                         | Plot                                                             |
