@@ -70,38 +70,30 @@ Match players across sources by name and/or ID. Handle name variations (e.g., sp
 * **Age** shows a modest negative association with value (ρ ≈ -0.13).  
 * **Scoring contribution** per 90 is strongly, positively linked to value (r ≈ 0.36).
 
-#### Machine Learning Results
+## 3. Machine Learning Methods & Findings
 
-| # | Model                                      | **R²**    | **MAE (€)**     |
-|---|--------------------------------------------|-----------|-----------------|
-|1  | Multiple Linear Regression<br>(log-target) | –4.933    | 18 572 194      |
-|2  | Random Forest Regressor                    | 0.031     | 7 788 588       |
-|3  | HistGradientBoostingRegressor (polynomials)| 0.156     | 8 625 915       |
+### Random Forest Regressor with Average Match Rating  
+**Script:** `src/07_ml_with_rating.py`  
+**Run command:**  
+```bash
+python src/07_ml_with_rating.py
+| Metric      | Value        |
+| ----------- | ------------ |
+| **R²**      | 0.420        |
+| **MAE (€)** | 7,489,153.65 |
 
-#### Implementation Details & Differences
+Example prediction:
+For a 24-year-old Brazilian in Serie A with
 
-| Script                                      | Key Characteristics                                     | When to Use                                     |
-|---------------------------------------------|---------------------------------------------------------|-------------------------------------------------|
-| `03_ml_logreg_clipped_fixed.py`             | - Multiple Linear Regression on **log1p**(value)        | Baseline interpretability: understand linear relationships after skew correction.  |
-|                                             | - Random Forest with GridSearch (trees & depth)         | Handles non-linear effects and interactions automatically; good first ensemble.   |
-|                                             | - Clipping & inverse-transform of predictions           | Ensures stable conversion back to original euro scale.                             |
-| `04_ml_boosting_with_perm_importance.py`    | - Polynomial & interaction feature engineering          | Captures explicit non-linear terms (e.g., age², score², age×score).               |
-|                                             | - HistGradientBoostingRegressor with GridSearch         | Powerful boosting algorithm that often outperforms RF on tabular data.             |
-|                                             | - Permutation importance on original 9 features         | Model-agnostic importance metric, identifies true driver strength.                |
+goals+assists per 90 = 0.50
 
-**Applications**  
-- **Linear Regression**: Use when you need clear coefficient interpretation and a quick baseline.  
-- **Random Forest**: Use when you want a robust, non-parametric model that handles mixed data types with minimal tuning.  
-- **Gradient Boosting**: Use when you require maximum predictive performance on complex, skewed data, especially after enriching features.
+cards = 5
 
+avg_match_rating = 7.2
 
-#### Feature Importances
+Predicted market value: €38,580,325
 
-| Model                         | Plot                                                             |
-|-------------------------------|------------------------------------------------------------------|
-| Random Forest                 | ![rf_feature_importance](https://github.com/user-attachments/assets/2e31117e-a518-462f-af46-4e8fa793f53b) 
-| Polynomial Random Forest      | ![rf_feature_importance_poly](https://github.com/user-attachments/assets/6b7c3d55-5f14-4125-bd78-8f58088a8962)    
-| HistGradientBoostingRegressor | ![hgb_perm_importance](https://github.com/user-attachments/assets/d6a9c7d0-2c83-42e3-979a-a3e770b721e3) |
-      
+Key finding:
+Adding average match rating increased explained variance from ~3% to 42%, and reduced MAE to ~€7.5 M. Future work could include hyperparameter tuning, additional features (injury days, contract length), or ensembling with gradient boosting.
 
 > _Limitations_: Dataset covers only 2019-20; match-rating, injury-days, and marital-status columns are placeholders for future scraping.
