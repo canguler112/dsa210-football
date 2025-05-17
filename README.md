@@ -78,75 +78,97 @@ Match players across sources by name and/or ID. Handle name variations (e.g., sp
 |2  | Random Forest Regressor                    | 0.031     | 7 788 588       |
 |3  | HistGradientBoostingRegressor (polynomials)| 0.156     | 8 625 915       |
 
-#### Prediction Equation (Multiple Linear Regression)
+#### 5. Prediction Equation (Multiple Linear Regression)
 
-Our multiple linear regression model was trained on the log-transformed target:
-
+We trained the model on the log-transformed target:
 \[
-y_{\text{log}} = \log(1 + \text{market\_value})
+y_{\text{log}} = \log\bigl(1 + \text{market\_value\_eur}\bigr)
 \]
-
 with three standardized predictors:
 \[
-z_{\text{age}} = \frac{\text{age} - \mu_{\text{age}}}{\sigma_{\text{age}}}, 
+z_{\text{age}}
+  = \frac{\text{age} - \mu_{\text{age}}}{\sigma_{\text{age}}},
 \quad
-z_{\text{score}} = \frac{\text{score\_contrib\_per90} - \mu_{\text{score}}}{\sigma_{\text{score}}},
+z_{\text{score}}
+  = \frac{\text{score\_contrib\_per90} - \mu_{\text{score}}}{\sigma_{\text{score}}},
 \quad
-z_{\text{cards}} = \frac{\text{cards\_2019\_20} - \mu_{\text{cards}}}{\sigma_{\text{cards}}}
+z_{\text{cards}}
+  = \frac{\text{cards\_2019\_20} - \mu_{\text{cards}}}{\sigma_{\text{cards}}}
 \]
 
-The fitted regression equation is:
-
+The fitted regression equation on the log scale is:
 \[
-\widehat{y}_{\text{log}} 
-= \beta_0 
-+ \beta_1\,z_{\text{age}}
-+ \beta_2\,z_{\text{score}}
-+ \beta_3\,z_{\text{cards}}
+\widehat{y}_{\text{log}}
+= \beta_0
+  + \beta_1\,z_{\text{age}}
+  + \beta_2\,z_{\text{score}}
+  + \beta_3\,z_{\text{cards}}
 \]
 
-To get back to euros:
-
+To recover the predicted market value in euros:
 \[
-\widehat{\text{market\_value}} 
-= \exp\bigl(\widehat{y}_{\text{log}}\bigr) - 1
+\widehat{\text{market\_value\_eur}}
+= \exp\bigl(\widehat{y}_{\text{log}}\bigr) \;-\; 1
 \]
 
-**Concrete coefficients** (example output from the model—your exact values may differ slightly):
+**Example coefficients** (your fitted values may differ):
 
-| Coefficient     | Value    |
-|-----------------|----------|
-| β₀ (intercept)  | 2.30     |
-| β₁ (age)        | –0.15    |
-| β₂ (score)      |  0.48    |
-| β₃ (cards)      | –0.02    |
+| Coefficient     | Value  |
+|-----------------|--------|
+| β₀ (intercept)  | 2.30   |
+| β₁ (age)        | –0.15  |
+| β₂ (score)      |  0.48  |
+| β₃ (cards)      | –0.02  |
 
-So for a player with age = 25, score_contrib_per90 = 0.40, cards_2019_20 = 5, and using the training set means/​stds:
+**Usage example**  
+For a player with  
+- age = 25  
+- score_contrib_per90 = 0.40  
+- cards_2019_20 = 5  
+
+and using training set means/σ’s:
 
 1. Compute  
-   \(z_{\text{age}}=(25-\mu_{\text{age}})/\sigma_{\text{age}}\),  
-   etc.
+   \[
+     z_{\text{age}}
+     = \frac{25 - \mu_{\text{age}}}{\sigma_{\text{age}}},
+     \quad
+     z_{\text{score}}
+     = \frac{0.40 - \mu_{\text{score}}}{\sigma_{\text{score}}},
+     \quad
+     z_{\text{cards}}
+     = \frac{5 - \mu_{\text{cards}}}{\sigma_{\text{cards}}}.
+   \]
 2. Compute  
-   \(\widehat{y}_{\text{log}} = 2.30 -0.15\,z_{\text{age}} +0.48\,z_{\text{score}} -0.02\,z_{\text{cards}}\).  
-3. Finally  
-   \(\widehat{\text{market\_value}} = \exp(\widehat{y}_{\text{log}}) - 1\).
+   \[
+     \widehat{y}_{\text{log}}
+     = 2.30
+       - 0.15\,z_{\text{age}}
+       + 0.48\,z_{\text{score}}
+       - 0.02\,z_{\text{cards}}.
+   \]
+3. Invert:  
+   \[
+     \widehat{\text{market\_value\_eur}}
+     = \exp\bigl(\widehat{y}_{\text{log}}\bigr) - 1.
+   \]
 
-You can extract the actual β’s and μ/σ values with:
-
+**Extract your actual μ, σ, β values** in Python:
 ```python
-# after fitting log_lr in src/03_ml_logreg_clipped_fixed.py
-lr = log_lr.regressor_.named_steps["lr"]
-pre = log_lr.regressor_.named_steps["pre"].named_transformers_["num"]
+# After fitting ‘log_lr’ in src/03_ml_logreg_clipped_fixed.py
+lr  = log_lr.regressor_.named_steps["lr"]
+num = log_lr.regressor_.named_steps["pre"].named_transformers_["num"]
 
-means = pre.mean_
-scales = pre.scale_
-coeffs = lr.coef_
-intercept = lr.intercept_
+mu     = num.mean_
+sigma  = num.scale_
+beta   = lr.coef_
+beta0  = lr.intercept_
 
-print("Intercept β0 =", intercept)
-print("Means:", means)
-print("Scales:", scales)
-print("Coefficients β:", coeffs)'''
+print("Means (μ):", mu)
+print("Stds (σ):", sigma)
+print("Coefficients (β):", beta)
+print("Intercept (β0):", beta0)
+
 
 
 #### Implementation Details & Differences
