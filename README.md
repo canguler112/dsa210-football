@@ -96,4 +96,36 @@ Predicted market value: €38,580,325
 Key finding:
 Adding average match rating increased explained variance from ~3% to 42%, and reduced MAE to ~€7.5 M. Future work could include hyperparameter tuning, additional features (injury days, contract length), or ensembling with gradient boosting.
 
+### 4.3 HistGradientBoostingRegressor with Average Match Rating
+
+**Purpose:**  
+- Leverage the enriched feature set (age, score_contrib_per90, cards, avg_match_rating, league, nationality)  
+- Capture non-linear interactions and complex relationships via gradient‐boosted trees  
+- Compare performance against the Random Forest baseline  
+
+**Procedure:**  
+1. Standard‐scale numeric features and one‐hot encode categorical ones.  
+2. Grid‐search over `max_iter=[200,400]`, `learning_rate=[0.01,0.05]`, `max_depth=[None,10,20]` using 5-fold CV.  
+3. Fit the best `HistGradientBoostingRegressor` on the training set.  
+4. Evaluate R² and MAE on the 30% held-out test set.  
+5. Compute permutation‐based feature importances for the final model.  
+
+**Results:**  
+- **Random Forest baseline** (for comparison):  
+  - R² = 0.429  
+  - MAE = €7,417,406  
+
+- **HistGradientBoostingRegressor (HGB):**  
+  - Best params: `learning_rate=0.05`, `max_depth=None`, `max_iter=200`  
+  - Test R² = 0.308  
+  - Test MAE = €8,403,984  
+
+- **Feature importances (permutation) saved to:**  
+  `images/hgb_with_rating_perm_importance.png`  
+
+**Key Finding:**  
+- While the HGB model offers a robust non-linear fit, the Random Forest remains the top performer on these features (R² = 0.429 vs. 0.308).  
+- Permutation importances highlight which variables (including `avg_match_rating`) drive the HGB predictions.  
+
+
 > _Limitations_: Dataset covers only 2019-20; match-rating, injury-days, and marital-status columns are placeholders for future scraping.
