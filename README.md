@@ -121,7 +121,8 @@ Adding average match rating increased explained variance from ~3% to 42%, and re
   - Test MAE = €8,403,984  
 
 - **Feature importances (permutation) saved to:**  
-  `images/hgb_with_rating_perm_importance.png`  
+ ![image](https://github.com/user-attachments/assets/0c23c94f-ad3e-4046-bb58-79cb30062283)
+ 
 
 **Key Finding:**  
 - While the HGB model offers a robust non-linear fit, the Random Forest remains the top performer on these features (R² = 0.429 vs. 0.308).  
