@@ -136,5 +136,20 @@ Adding average match rating increased explained variance from ~3% to 42%, and re
 - While the HGB model offers a robust non-linear fit, the Random Forest remains the top performer on these features (R² = 0.429 vs. 0.308).  
 - Permutation importances highlight which variables (including `avg_match_rating`) drive the HGB predictions.  
 
+### Summary of ML Findings
 
-> _Limitations_: Dataset covers only 2019-20; match-rating, injury-days, and marital-status columns are placeholders for future scraping.
+After enriching the dataset with **average match ratings**, we evaluated two tree-based models:
+
+- **Random Forest Regressor** achieved **R² = 0.429** and **MAE = €7.42 M**.  
+  - **Top factors:**  
+    1. `avg_match_rating`  
+    2. `score_contrib_per90`  
+    3. `age`  
+
+- **HistGradientBoostingRegressor** (best params: `learning_rate=0.05`, `max_iter=200`, `max_depth=None`) yielded **R² = 0.308** and **MAE = €8.40 M**.  
+  - **Most important predictors** (permutation importance):  
+    1. `avg_match_rating`  
+    2. `score_contrib_per90`  
+    3. `cards_2019_20`  
+
+Overall, adding **avg_match_rating** provided the largest single boost in predictive power, and the Random Forest model now explains over **42% of variance** in market values with under **€7.5 M average error**.  
