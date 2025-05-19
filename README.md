@@ -70,6 +70,13 @@ Match players across sources by name and/or ID. Handle name variations (e.g., sp
 * **Age** shows a modest negative association with value (ρ ≈ -0.13).  
 * **Scoring contribution** per 90 is strongly, positively linked to value (r ≈ 0.36).
 
+### Data Enrichment
+
+- The original 500-player dataset was **manually enriched** with an `avg_match_rating` feature.
+- We collected each player’s average rating for the 2019–20 season (e.g. from FBref match logs) and added it as a new numeric column.
+- This enrichment provides a composite performance signal—capturing consistency, defensive work, and overall contribution—that significantly boosts model accuracy.
+
+
 ## 3. Machine Learning Methods & Findings
 
 ### Random Forest Regressor with Average Match Rating  
