@@ -7,12 +7,13 @@ Analyzing the Determinants of Football Player Market Value
 Football player market valuations can vary greatly depending on a variety of criteria, including on-field performance, age, position, league quality, and more. By focusing on these characteristics, I hope to get insight into which factors have the greatest influence on how players are valued in the transfer market. This study will not only help me improve my data science skills, but it may also provide insights for teams, scouts, and fans looking to evaluate player worth more objectively.
 
 ### Features/ Factors
-1. Market Value
+1. Market Value (Prediction)
 2. Age
 3. Nationality
 4. Average Score Contribution (Goals + Assists)
 5. Player League
 6. Average Card per Season
+7. Average Match Rating
    
 ### Data Source and Collection
 
