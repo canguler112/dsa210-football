@@ -96,7 +96,7 @@ Predicted market value: €38,580,325
 Key finding:
 Adding average match rating increased explained variance from ~3% to 42%, and reduced MAE to ~€7.5 M. Future work could include hyperparameter tuning, additional features (injury days, contract length), or ensembling with gradient boosting.
 
-### 4.3 HistGradientBoostingRegressor with Average Match Rating
+### HistGradientBoostingRegressor with Average Match Rating
 
 **Purpose:**  
 - Leverage the enriched feature set (age, score_contrib_per90, cards, avg_match_rating, league, nationality)  
