@@ -77,7 +77,7 @@ Match players across sources by name and/or ID. Handle name variations (e.g., sp
 - This enrichment provides a composite performance signal—capturing consistency, defensive work, and overall contribution—that significantly boosts model accuracy.
 
 
-## 3. Machine Learning Methods & Findings
+## 3. Machine Learning Methods & Findings (23 May checkpoint)
 
 ### Random Forest Regressor with Average Match Rating  
 **Script:** `src/07_ml_with_rating.py`  
