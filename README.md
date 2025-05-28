@@ -74,7 +74,7 @@ Match players across sources by name and/or ID. Handle name variations (e.g., sp
 ### Data Enrichment
 
 - The original 500-player dataset was **manually enriched** with an `avg_match_rating` feature.
-- We collected each player’s average rating for the 2019–20 season (e.g. from FBref match logs) and added it as a new numeric column.
+- I collected each player’s average rating for the 2019–20 season (e.g. from FBref match logs) and added it as a new numeric column.
 - This enrichment provides a composite performance signal—capturing consistency, defensive work, and overall contribution—that significantly boosts model accuracy.
 
 
